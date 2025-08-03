@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add User</title>
+</head>
+<body>
+<h2>Add User</h2>
+
+<div th:if="${error}" style="color: red; margin-bottom: 10px;">
+    <p th:text="${error}"></p>
+</div>
+
+<form th:action="@{/users/save}" method="post" th:object="${user}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}"
+           pattern="^[A-Za-zА-Яа-яЁё가-힣]+$"
+           title="Only letters allowed (English, Russian, or Korean)"
+           required/><br/>
+
+    <label>Last Name:</label>
+    <input type="text" th:field="*{lastName}"
+           pattern="^[A-Za-zА-Яа-яЁё가-힣]+$"
+           title="Only letters allowed (English, Russian, or Korean)"
+           required/><br/>
+
+    <label>Age:</label>
+    <input type="number" th:field="*{age}"
+           min="0"
+           step="1"
+           title="Please enter a positive whole number"
+           required/><br/>
+
+    <label>Email:</label>
+    <input type="email" th:field="*{email}"
+           title="Введите корректный email"
+           required />
+
+
+    <button type="submit">Save</button>
+</form>
+
+<a th:href="@{/users}">Back</a>
+</body>
+</html>

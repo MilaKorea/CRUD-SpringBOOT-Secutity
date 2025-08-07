@@ -10,7 +10,7 @@
     <p th:text="${error}"></p>
 </div>
 
-<form th:action="@{/users/save}" method="post" th:object="${user}">
+<form th:action="@{/admin/save}" method="post" th:object="${user}">
     <label>Name:</label>
     <input type="text" th:field="*{name}"
            pattern="^[A-Za-zА-Яа-яЁё가-힣]+$"
@@ -33,12 +33,29 @@
     <label>Email:</label>
     <input type="email" th:field="*{email}"
            title="Введите корректный email"
-           required />
+           required /><br/>
 
+    <label>Username:</label>
+    <input type="text" th:field="*{username}"
+           title="Введите username"
+           required /><br/>
+
+    <label>Password:</label>
+    <input type="password" th:field="*{password}"
+           title="Введите password"
+           required /><br/>
+
+    <label>Role:</label><br/>
+    <select multiple th:field="*{roles}">
+        <option th:each="role : ${allRoles}"
+                th:value="${role.id}"
+                th:text="${role.roleName}">
+        </option>
+    </select>
 
     <button type="submit">Save</button>
 </form>
 
-<a th:href="@{/users}">Back</a>
+<a th:href="@{/admin}">Back</a>
 </body>
 </html>

@@ -11,7 +11,8 @@
 </div>
 
 
-<form th:action="@{/users/update}" method="get" th:object="${user}">
+<form th:action="@{/admin/update}" method="post" th:object="${user}">
+
   <input type="hidden" th:field="*{id}" />
 
   <label>Name:</label>
@@ -38,10 +39,28 @@
          title="Введите корректный email"
          required />
 
+  <label>Username:</label>
+  <input type="text" th:field="*{username}"
+         title="Введите username"
+         required /><br/>
+
+  <label>Password:</label>
+  <input type="password" th:field="*{password}"
+         title="Введите password"
+         required /><br/>
+
+  <label>Role:</label><br/>
+  <select multiple th:field="*{roles}">
+    <option th:each="role : ${allRoles}"
+            th:value="${role.id}"
+            th:text="${role.roleName}">
+    </option>
+  </select>
+
 
   <button type="submit">Update</button>
 </form>
 
-<a th:href="@{/users}">Back</a>
+<a th:href="@{/admin}">Back</a>
 </body>
 </html>

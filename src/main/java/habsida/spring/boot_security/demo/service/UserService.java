@@ -13,4 +13,7 @@ public interface UserService {
     User getUserById(Long id);
 
     void updateUser(User user);
-}
+
+    User findByUsername(String username);
+
+    }

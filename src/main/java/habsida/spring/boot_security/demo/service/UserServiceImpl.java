@@ -77,6 +77,10 @@ public class UserServiceImpl  implements UserService{
         if(userExists.isPresent()) {
             throw new IllegalArgumentException("A user with this email already exists.");
         }
+        if (user.getPassword()==null || user.getPassword().trim().isEmpty()){
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -86,6 +90,11 @@ public class UserServiceImpl  implements UserService{
         Optional<User> userExists = userRepository.findByEmail(user.getEmail());
         if(userExists.isPresent() && !userExists.get().getId().equals(user.getId())) {
             throw new IllegalArgumentException("A user with this email already exists.");
+        }
+        if (user.getPassword()!=null || !user.getPassword().trim().isEmpty()){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }else {
+            user.setPassword(userExists.get().getPassword());
         }
         userRepository.save(user);
     }

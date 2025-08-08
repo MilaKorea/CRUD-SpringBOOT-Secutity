@@ -40,16 +40,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/", "/index").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/admin").hasRole("ADMIN")
+                    .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                    .antMatchers("/", "/index", "/login").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(successUserHandler)
-                .permitAll()
+                .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .successHandler(successUserHandler)
+                    .failureUrl("/login?error")
+                    .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll();
     }
     @Bean
     public PasswordEncoder getPasswordEncoder() {

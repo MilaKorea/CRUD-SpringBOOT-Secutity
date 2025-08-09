@@ -13,6 +13,10 @@
     <p><strong>Password:</strong><span th:text="${user.password}">Password</span></p>
     <p><strong>Roles:</strong><span th:each ="role : ${user.roles}" th:text="${role.roleName}">Roles</span></p>
 
-    <a th:href="@{/logout}">Logout</a>
+    <form th:action="@{/logout}" method="post" style="display:inline">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button type="submit">Logout</button>
+    </form>
+
 </body>
 </html>
